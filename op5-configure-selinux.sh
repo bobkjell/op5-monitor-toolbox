@@ -18,7 +18,7 @@ unconfined_type="bin_t"
 abrt_services="abrt-ccpp.service abrtd.service abrt-oops.service abrt-pstoreoops.service abrt-vmcore.service abrt-xorg.service"
 /usr/bin/systemctl disable $abrt_services &>/dev/null
 /usr/bin/systemctl stop $abrt_services &>/dev/null
-usr/bin/systemctl mask $abrt_services &>/dev/null
+/usr/bin/systemctl mask $abrt_services &>/dev/null
 
 # Set file contexts
 echo "Setting file contexts..."
