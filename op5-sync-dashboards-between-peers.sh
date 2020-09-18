@@ -24,6 +24,7 @@ ssh=$(command -v ssh)
 tmpdir="/tmp"
 table_dashboards="merlin.dashboards.sql"
 table_dashboards_widgets="merlin.dashboard_widgets.sql"
+table_saved_filters="merlin.ninja_saved_filters.sql"
 
 # Check root privileges
 if [ $EUID -ne 299 ]
@@ -38,13 +39,15 @@ peers=$(mon node list --type=peer | cut -d' ' -f3)
 # Dump current dashboard tables
 $mysqldump -u root merlin dashboards > "${tmpdir}"/"${table_dashboards}"
 $mysqldump -u root merlin dashboard_widgets > "${tmpdir}"/"${table_dashboards_widgets}"
+$mysqldump -u root merlin ninja_saved_filters > "${tmpdir}"/"${table_saved_filters}"
 
 # Send & import to other peer(s)
 for peer in $peers
 do
-        $scp "${tmpdir}"/"${table_dashboards}" "${tmpdir}"/"${table_dashboards_widgets}" "$peer":"${tmpdir}"
+        $scp "${tmpdir}"/"${table_dashboards}" "${tmpdir}"/"${table_dashboards_widgets}" "${tmpdir}"/"${table_saved_filters}" "$peer":"${tmpdir}"
         $ssh "$peer" "$mysql -u root merlin < ${tmpdir}/${table_dashboards}"
         $ssh "$peer" "$mysql -u root merlin < ${tmpdir}/${table_dashboards_widgets}"
+        $ssh "$peer" "$mysql -u root merlin < ${tmpdir}/${table_saved_filters}"
 done
 
 # Done
