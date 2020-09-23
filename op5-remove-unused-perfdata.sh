@@ -18,15 +18,15 @@ fi
 cd /opt/monitor/op5/pnp/perfdata/  || exit 1
 for host_folder in *
 do
-	host_folder="${host_folder//_/ }"
-	if [ -d "$host_folder" ]
-	then
-		host_exist=$(mon query ls hosts -c name name -e "$host_folder")
-		if [ -z "$host_exist" ]
-		then
-			echo "Deleting: $host_folder"
-			rm -fr "$host_folder"
-		fi
-		host_exist=""
-	fi
+    if [ -d "$host_folder" ]
+    then
+        host_name="${host_folder//_/ }"
+        host_exist=$(mon query ls hosts -c name name -e "$host_name")
+        if [  -z "$host_exist" ]
+        then
+            echo "Deleting: $host_name"
+            rm -fr "$host_name"
+        fi
+        host_exist=""
+    fi
 done
