@@ -23,7 +23,8 @@ To remove performance data from hosts/services that does not exist in object con
 ```
 
 ## op5-sync-dashboards-between-peers
-In peered environments, it could be useful to have the same dashboard for all users. Since ITRS OP5 Monitor does not sync dashboard.
+In peered environments, it could be useful to have the same dashboard for all users, since ITRS OP5 Monitor does not sync dashboards.
 ```
 ./op5-sync-dashboards-between-peers.sh
 ```
+Recommended to configure as a cronjob.
